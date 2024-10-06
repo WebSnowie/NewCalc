@@ -310,8 +310,9 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
             onChange={handleInputChange} 
             placeholder="Enter METAR Code"
             style={{ flex: 1, marginRight: '10px' }}
+            className={styles.metarinput}
           />
-          <button className={styles.calculatebutton} onClick={fetchMetarData}>Fetch</button>
+          <button className={styles.metarbutton} onClick={fetchMetarData}>Fetch</button>
         </div>
       </div>
       <div className={styles.inputgroup}>
