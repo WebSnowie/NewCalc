@@ -1,0 +1,35 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column; /* Stack the elements vertically */
+  align-items: center; /* Center both the h1 and button horizontally */
+  text-align: center; /* Center the text inside the h1 */
+  padding: 20px;
+}
+
+.buttonContainer {
+  margin-top: 20px; /* Adds some spacing at the top */
+}
+
+.saveButton {
+  background-color: #007bff; /* Primary blue color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Button text size */
+  border: none; /* No border */
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.saveButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.saveButton:active {
+  background-color: #004494; /* Even darker blue on click */
+}
+
+.saveButton:disabled {
+  background-color: #c0c0c0; /* Gray background for disabled button */
+  cursor: not-allowed; /* Not-allowed cursor for disabled state */
+}
