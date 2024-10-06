@@ -7,9 +7,13 @@ const aircraftData = [
   { reg: "OY-GBE", weight: 403.5, balanceArm: 1.689, moment: 681.5115 },
   { reg: "OY-EJM", weight: 406, balanceArm: 1.712, moment: 695.072 },
   { reg: "OY-GBD", weight: 408.25, balanceArm: 1.694, moment: 691.5755 },
-  { reg: "OY-GBG", weight: 404.5, balanceArm: 1.688, moment: 682.796 },
   { reg: "OY-MEJ", weight: 400.5, balanceArm: 1.722, moment: 689.661 },
   { reg: "OY-MJE", weight: 398, balanceArm: 1.671, moment: 665.058 },
+  { reg: "OY-GBI", weight: 404.5, balanceArm: 1.688, moment: 682.796 },
+  { reg: "OY-EMJ", weight: 398.245, balanceArm: 1.687, moment: 671.83932 },
+
+
+
 ];
 
 // Instructor data
