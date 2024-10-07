@@ -228,7 +228,6 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
         let LandingfinalcalcHigherdividedValue;
         let LandingfinalcalcinterpolatedGR;
         let LandingfinalcalchigherdividedValue50ft;
-        let Landingfinalcalcinterpolated50ft;
         let LandingfinalCalculation;
   
         if (upperInterpolatedLandingGroundRoll > 0) {
@@ -362,7 +361,6 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
       LandingfinalcalcHigherdividedValue: LandingfinalcalcHigherdividedValue,
       LandingfinalcalcinterpolatedGR: LandingfinalcalcinterpolatedGR,
       LandingfinalcalchigherdividedValue50ft: LandingfinalcalchigherdividedValue50ft,
-      Landingfinalcalcinterpolated50ft: Landingfinalcalcinterpolated50ft,
       LandingfinalCalculation: LandingfinalCalculation,
       finalCalculation: finalCalculation,
       finalcalchigherdividedValue50ft: finalcalchigherdividedValue50ft,
@@ -388,7 +386,6 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
         LandingfinalcalcHigherdividedValue: LandingfinalcalcHigherdividedValue,
         LandingfinalcalcinterpolatedGR: LandingfinalcalcinterpolatedGR,
         LandingfinalcalchigherdividedValue50ft: LandingfinalcalchigherdividedValue50ft,
-        Landingfinalcalcinterpolated50ft: Landingfinalcalcinterpolated50ft,
         LandingfinalCalculation: LandingfinalCalculation,
         finalCalculation: finalCalculation,
         finalcalchigherdividedValue50ft: finalcalchigherdividedValue50ft,

@@ -53,7 +53,6 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
           LandingfinalcalcHigherdividedValue,
           LandingfinalcalcinterpolatedGR,
           LandingfinalcalchigherdividedValue50ft,
-          Landingfinalcalcinterpolated50ft,
           LandingfinalCalculation,
           finalCalculation,
           finalcalchigherdividedValue50ft,
