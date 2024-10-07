@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib'; // For generating and manipulating PDFs
 import TakeoffCalculator from './components/weightupdated'; // Takeoff Calculator component
 import WeightAndBalanceCalculator from './components/distance'; // Weight and Balance Calculator component
@@ -22,12 +22,6 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
       const form = pdfDoc.getForm();
 
-      // Log all form fields to see if they're being detected correctly
-      const fields = form.getFields();
-      fields.forEach((field) => {
-        console.log(`Field name: ${field.getName()}`);
-      });
-
       // Helper function to format values
       const formatValue = (value) => {
         if (typeof value === 'number' && !isNaN(value)) {
@@ -49,9 +43,25 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
           balanceArm,
           aircraftMoment
         } = weightBalanceResult;
+
         const totalW = weight + fuel + pilot + baggage;
         const totalB = aircraftMoment + fuel_moment + pilot_moment + baggage_moment;
+
         const {
+          LandingcalcdividedValue50ft,
+          LandingcalcdividedValue,
+          LandingfinalcalcHigherdividedValue,
+          LandingfinalcalcinterpolatedGR,
+          LandingfinalcalchigherdividedValue50ft,
+          Landingfinalcalcinterpolated50ft,
+          LandingfinalCalculation,
+          finalCalculation,
+          finalcalchigherdividedValue50ft,
+          finalcalcHigherdividedValue,
+          finalcalcinterpolatedGR,
+          calcPressureAltitudes,
+          calcdividedValue50ft,
+          calcdividedValue,
           takeoffDistanceWithoutSafetyFactor,
           takeoffDistanceWithIncreasedRotationSpeed,
           correctedTakeoffDistance,
@@ -85,6 +95,22 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
         form.getTextField('CorrectedLanding').setText(formatValue(landingDistanceWithIncreasedRotationSpeed));
         form.getTextField('CorrectedLandingSafety').setText(formatValue(correctedLandingDistance));
 
+        form.getTextField('QNH_calculation').setText(calcPressureAltitudes);
+        form.getTextField('groundroll').setText(calcdividedValue);
+        form.getTextField('50ftabove').setText(finalcalchigherdividedValue50ft); 
+
+        form.getTextField('test').setText(calcdividedValue50ft); 
+        form.getTextField('testt').setText(finalcalcHigherdividedValue); 
+        form.getTextField('testtt').setText(finalcalcinterpolatedGR); 
+        form.getTextField('testttt').setText(finalCalculation);        
+        
+        form.getTextField('landinggroundroll').setText(LandingcalcdividedValue);
+        form.getTextField('landing50ftabove').setText(LandingfinalcalchigherdividedValue50ft); 
+        form.getTextField('landing1').setText(LandingcalcdividedValue50ft); 
+        form.getTextField('landing2').setText(LandingfinalcalcHigherdividedValue); 
+        form.getTextField('landing3').setText(LandingfinalcalcinterpolatedGR); 
+        form.getTextField('landing4').setText(LandingfinalCalculation);        
+
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const link = document.createElement('a');
@@ -112,11 +138,6 @@ const MainCalculator = () => {
   const [takeoffResult, setTakeoffResult] = useState(null); // For takeoff results
   const [weightBalanceResult, setWeightBalanceResult] = useState(null); // For weight and balance results
 
-  useEffect(() => {
-    console.log("Takeoff Result:", takeoffResult);
-    console.log("Weight and Balance Result:", weightBalanceResult);
-  }, [takeoffResult, weightBalanceResult]);
-
   return (
     <div className={styles.mainContainer}>
       <h1>Flight Preparation Calculator</h1>
@@ -130,7 +151,7 @@ const MainCalculator = () => {
       {/* Save PDF Button - Show only if both calculators have results */}
       {takeoffResult && weightBalanceResult && (
         <div className={styles.buttonContainer}>
-        <SavePDFButton takeoffResult={takeoffResult} weightBalanceResult={weightBalanceResult} />
+          <SavePDFButton takeoffResult={takeoffResult} weightBalanceResult={weightBalanceResult} />
         </div>
       )}
     </div>

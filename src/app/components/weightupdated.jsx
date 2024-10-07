@@ -101,6 +101,7 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
 
     // Calculate Pressure Altitude
     let pressureAltitude = (1013 - QNH) * 30 + fieldElevation;
+    
 
     // If pressure altitude is negative, set it to 0
     if (pressureAltitude < 0) {
@@ -122,8 +123,7 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
       lowerTemp,
       upperTemp,
       temperature
-    );
-    
+    );    
     
     
     const interpolatedDistance50ft = interpolate(
@@ -193,7 +193,127 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
         temperature
       );
     }
+            // used for calculation output for PDF
+    const calcPressureAltitude = `(1013 - ${QNH}) * 30 + ${fieldElevation}`;
+    const calcLowerValue = groundRollTable[`${lowerAltitude}`][lowerTemp]
+    const calcHigherValue = groundRollTable[`${lowerAltitude}`][upperTemp]
+    const calcCombinedValue = `${calcHigherValue} - ${calcLowerValue}`;
+    const testtt = (((calcHigherValue - calcLowerValue) / 25 * temperature))
+    const calcdividedValue = `${calcCombinedValue} = ${calcHigherValue - calcLowerValue} / 25 * ${temperature} = ${testtt.toFixed(3)} + ${calcLowerValue} = ${(testtt + calcLowerValue).toFixed(3)}`
+
+      // USED FOR calculation the 50ft above
+      const calcLower50ftValue = distance50ftTable[`${lowerAltitude}`][lowerTemp]
+      const calcHigher50ftValue = distance50ftTable[`${lowerAltitude}`][upperTemp]
+      const calcCombined50ftValue = `${calcHigher50ftValue} - ${calcLower50ftValue}`;
+      const testtt50ft = (((calcHigher50ftValue - calcLower50ftValue) / 25 * temperature))
+      const calcdividedValue50ft = `${calcCombined50ftValue} = ${calcHigher50ftValue - calcLower50ftValue} / 25 * ${temperature} = ${testtt50ft.toFixed(3)} + ${calcLower50ftValue} = ${(testtt50ft + calcLower50ftValue).toFixed(3)}`
+
+
+      const landingcalcLowerValue = landingGroundRollTable[`${lowerAltitude}`][lowerTemp]
+      const landingcalcHigherValue = landingGroundRollTable[`${lowerAltitude}`][upperTemp]
+      const landingcalcCombinedValue = `${landingcalcHigherValue} - ${landingcalcLowerValue}`;
+      const landingtesttt = (((landingcalcHigherValue - landingcalcLowerValue) / 25 * temperature))
+      const landingcalcdividedValue = `${landingcalcCombinedValue} = ${landingcalcHigherValue - landingcalcLowerValue} / 25 * ${temperature} = ${landingtesttt.toFixed(3)} + ${landingcalcLowerValue} = ${(landingtesttt + landingcalcLowerValue).toFixed(3)}`
+  
+        // USED FOR calculation the 50ft above
+        const landingcalcLower50ftValue = landing50ftTable[`${lowerAltitude}`][lowerTemp]
+        const landingcalcHigher50ftValue = landing50ftTable[`${lowerAltitude}`][upperTemp]
+        const landingcalcCombined50ftValue = `${landingcalcHigher50ftValue} - ${landingcalcLower50ftValue}`;
+        const landingtesttt50ft = (((landingcalcHigher50ftValue - landingcalcLower50ftValue) / 25 * temperature))
+        const landingcalcdividedValue50ft = `${landingcalcCombined50ftValue} = ${landingcalcHigher50ftValue - landingcalcLower50ftValue} / 25 * ${temperature} = ${landingtesttt50ft.toFixed(3)} + ${landingcalcLower50ftValue} = ${(landingtesttt50ft + landingcalcLower50ftValue).toFixed(3)}`
+  
+
+
+
+        let LandingfinalcalcHigherdividedValue;
+        let LandingfinalcalcinterpolatedGR;
+        let LandingfinalcalchigherdividedValue50ft;
+        let Landingfinalcalcinterpolated50ft;
+        let LandingfinalCalculation;
+  
+        if (upperInterpolatedLandingGroundRoll > 0) {
+        const LandingcalchighHigherValue = landingGroundRollTable[`${upperAltitude}`][lowerTemp]
+        const LandingcalcLowerHigherValue = landingGroundRollTable[`${upperAltitude}`][upperTemp]
+        const LandingcalcHigherCombinedValue = `${LandingcalcLowerHigherValue} - ${LandingcalchighHigherValue}`;
+        const Landingtestt = (((LandingcalcLowerHigherValue - LandingcalchighHigherValue) / 25 * temperature));
+        const LandingcalcHigherdividedValue = `${LandingcalcHigherCombinedValue} = ${LandingcalcLowerHigherValue - LandingcalchighHigherValue} / 25 * ${temperature} = ${Landingtestt.toFixed(3)} + ${LandingcalchighHigherValue} = ${(Landingtestt + LandingcalchighHigherValue).toFixed(3)}` 
+        // USed for 50ft above ground!
         
+        const LandingcalchighHigher50ftValue = landing50ftTable[`${upperAltitude}`][lowerTemp]
+        const LandingcalcLowerHigher50ftValue = landing50ftTable[`${upperAltitude}`][upperTemp]
+        const LandingcalcHigherCombined50ftValue = `${LandingcalcLowerHigher50ftValue} - ${LandingcalchighHigher50ftValue}`;
+        const Landingtestt50ft = (((LandingcalcLowerHigher50ftValue - LandingcalchighHigher50ftValue) / 25 * temperature));
+        const LandingcalcHigherdividedValue50ft = `${LandingcalcHigherCombined50ftValue} = ${LandingcalcLowerHigher50ftValue - LandingcalchighHigher50ftValue} / 25 * ${temperature} = ${Landingtestt50ft.toFixed(3)} + ${LandingcalchighHigher50ftValue} = ${(Landingtestt50ft + LandingcalchighHigher50ftValue).toFixed(3)}` 
+        
+        //interpolate between altitudes
+  
+        const LandinginterpolatedValue = (Landingtestt + LandingcalchighHigherValue) - (landingtesttt + landingcalcLowerValue)
+        
+        const LandingcalcinterpolatedGR = `${Landingtestt + LandingcalchighHigherValue} - ${landingtesttt + landingcalcLowerValue} = ${LandinginterpolatedValue.toFixed(3)} / ${(1000 / modifiedPressureAltitude).toFixed(3) } (1000 / Pressure altitude) = ${(LandinginterpolatedValue/(1000 / modifiedPressureAltitude)).toFixed(3)} + ${landingtesttt + landingcalcLowerValue} = (${(landingtesttt + landingcalcLowerValue + LandinginterpolatedValue / (1000 / modifiedPressureAltitude)).toFixed(3)}) * 0.02 = ${((landingtesttt + landingcalcLowerValue + (LandinginterpolatedValue) / (1000 / modifiedPressureAltitude)) * 0.02).toFixed(3)}`      
+  
+        const LandingaddedVal = (landingtesttt + landingcalcLowerValue + (LandinginterpolatedValue) / (1000 / modifiedPressureAltitude)) * 0.02
+        const Landinginterpolated50ftValue = (Landingtestt50ft + LandingcalchighHigher50ftValue) - (landingtesttt50ft + landingcalcLower50ftValue)
+        const Landingcalcinterpolated50ft = `${Landingtestt50ft + LandingcalchighHigher50ftValue} - ${landingtesttt50ft + landingcalcLower50ftValue} = ${Landinginterpolated50ftValue.toFixed(3)} / ${(1000 / modifiedPressureAltitude).toFixed(3) } (1000 / Pressure altitude) = ${(Landinginterpolated50ftValue/(1000 / modifiedPressureAltitude)).toFixed(3)} + ${landingtesttt50ft + landingcalcLower50ftValue } - ${LandingaddedVal} = ${(landingtesttt50ft + landingcalcLower50ftValue + Landinginterpolated50ftValue / (1000 / modifiedPressureAltitude)-LandingaddedVal).toFixed(3)}`      
+        
+        LandingfinalCalculation = Landingcalcinterpolated50ft; 
+        LandingfinalcalcinterpolatedGR = LandingcalcinterpolatedGR;
+        LandingfinalcalcHigherdividedValue = LandingcalcHigherdividedValue; 
+        LandingfinalcalchigherdividedValue50ft = LandingcalcHigherdividedValue50ft;
+          }
+        else {
+          const Landingcalculated = (landingtesttt + landingcalcLowerValue) * 0.02
+          const Landingfinalwithoutalt = `(${landingtesttt + landingcalcLowerValue}) = ${Landingcalculated}`
+          const LandingfinalCalcwithAlt = `${landingcalcLower50ftValue + landingtesttt50ft} - ${Landingcalculated} = ${landingtesttt50ft + landingcalcLower50ftValue - Landingcalculated} `
+  
+         LandingfinalcalcHigherdividedValue = Landingfinalwithoutalt;
+          LandingfinalcalchigherdividedValue50ft = LandingfinalCalcwithAlt; 
+        }      
+  
+      // used for calc if there is altitude for PDF
+      let finalcalcHigherdividedValue;
+      let finalcalcinterpolatedGR;
+      let finalcalchigherdividedValue50ft;
+      let finalcalcinterpolated50ft;
+      let finalCalculation;
+
+      if (upperInterpolatedLandingGroundRoll > 0) {
+      const calchighHigherValue = groundRollTable[`${upperAltitude}`][lowerTemp]
+      const calcLowerHigherValue = groundRollTable[`${upperAltitude}`][upperTemp]
+      const calcHigherCombinedValue = `${calcLowerHigherValue} - ${calchighHigherValue}`;
+      const testt = (((calcLowerHigherValue - calchighHigherValue) / 25 * temperature));
+      const calcHigherdividedValue = `${calcHigherCombinedValue} = ${calcLowerHigherValue - calchighHigherValue} / 25 * ${temperature} = ${testt.toFixed(3)} + ${calchighHigherValue} = ${(testt + calchighHigherValue).toFixed(3)}` 
+      // USed for 50ft above ground!
+      
+      const calchighHigher50ftValue = distance50ftTable[`${upperAltitude}`][lowerTemp]
+      const calcLowerHigher50ftValue = distance50ftTable[`${upperAltitude}`][upperTemp]
+      const calcHigherCombined50ftValue = `${calcLowerHigher50ftValue} - ${calchighHigher50ftValue}`;
+      const testt50ft = (((calcLowerHigher50ftValue - calchighHigher50ftValue) / 25 * temperature));
+      const calcHigherdividedValue50ft = `${calcHigherCombined50ftValue} = ${calcLowerHigher50ftValue - calchighHigher50ftValue} / 25 * ${temperature} = ${testt50ft.toFixed(3)} + ${calchighHigher50ftValue} = ${(testt50ft + calchighHigher50ftValue).toFixed(3)}` 
+      
+      //interpolate between altitudes
+
+      const interpolatedValue = (testt + calchighHigherValue) - (testtt + calcLowerValue)
+      
+      const calcinterpolatedGR = `${testt + calchighHigherValue} - ${testtt + calcLowerValue} = ${interpolatedValue.toFixed(3)} / ${(1000 / modifiedPressureAltitude).toFixed(3) } (1000 / Pressure altitude) = ${(interpolatedValue/(1000 / modifiedPressureAltitude)).toFixed(3)} + ${testtt + calcLowerValue} = (${(testtt + calcLowerValue + interpolatedValue / (1000 / modifiedPressureAltitude)).toFixed(3)} + 50) * 0.06 = ${((testtt + calcLowerValue + (interpolatedValue) / (1000 / modifiedPressureAltitude) + 50) * 0.06).toFixed(3)}`      
+
+      const addedVal = (testtt + calcLowerValue + (interpolatedValue) / (1000 / modifiedPressureAltitude) + 50) * 0.06
+      const interpolated50ftValue = (testt50ft + calchighHigher50ftValue) - (testtt50ft + calcLower50ftValue)
+      const calcinterpolated50ft = `${testt50ft + calchighHigher50ftValue} - ${testtt50ft + calcLower50ftValue} = ${interpolated50ftValue.toFixed(3)} / ${(1000 / modifiedPressureAltitude).toFixed(3) } (1000 / Pressure altitude) = ${(interpolated50ftValue/(1000 / modifiedPressureAltitude)).toFixed(3)} + ${testtt50ft + calcLower50ftValue } - ${addedVal} = ${(testtt50ft + calcLower50ftValue + interpolated50ftValue / (1000 / modifiedPressureAltitude)-addedVal).toFixed(3)}`      
+      
+      finalCalculation = calcinterpolated50ft; 
+      finalcalcinterpolatedGR = calcinterpolatedGR;
+      finalcalcHigherdividedValue = calcHigherdividedValue; 
+      finalcalchigherdividedValue50ft = calcHigherdividedValue50ft;
+        }
+      else {
+        const calculated = (testtt + calcLowerValue + 50) * 0.06
+        const finalwithoutalt = `(${testtt + calcLowerValue} + ${50}) * 0.06 = ${calculated}`
+        const finalCalcwithAlt = `${calcLower50ftValue + testtt50ft} - ${calculated} = ${testtt50ft + calcLower50ftValue - calculated} `
+
+        finalcalcHigherdividedValue = finalwithoutalt;
+        finalcalchigherdividedValue50ft = finalCalcwithAlt; 
+      }      
+
     let finaladjustedtakeoff; // Declare it outside the if statement
 
     if (modifiedPressureAltitude > 0) {
@@ -217,7 +337,7 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
     if (upperInterpolatedLandingGroundRoll > 0) {
       const deltaLandingGroundRoll = upperInterpolatedLandingGroundRoll - interpolatedLandingGroundRoll;
       const scaledDeltaLanding = deltaLandingGroundRoll / 1000 * modifiedPressureAltitude;
-      const adjustedLanding = scaledDeltaLanding + interpolatedLandingGroundRoll + 50;
+      const adjustedLanding = scaledDeltaLanding + interpolatedLandingGroundRoll;
       const upperadLandingjustedGroundRolls = adjustedLanding * 0.02;
       
       const upperadLandingjusted50ft = ((((upperInterpolatedLandingDistance50ft - interpolatedLandingDistance50ft) / 1000) * modifiedPressureAltitude) + interpolatedLandingDistance50ft);
@@ -235,9 +355,23 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
     const lastCalcTakeOff = finaladjustedtakeoff;
     const lastLanding = finalLandingadjustedtakeoff;
     
-    // Set the result after the if-else block
     setResult((prev) => ({
       ...prev,
+      LandingcalcdividedValue50ft: landingcalcdividedValue50ft,
+      LandingcalcdividedValue: landingcalcdividedValue,
+      LandingfinalcalcHigherdividedValue: LandingfinalcalcHigherdividedValue,
+      LandingfinalcalcinterpolatedGR: LandingfinalcalcinterpolatedGR,
+      LandingfinalcalchigherdividedValue50ft: LandingfinalcalchigherdividedValue50ft,
+      Landingfinalcalcinterpolated50ft: Landingfinalcalcinterpolated50ft,
+      LandingfinalCalculation: LandingfinalCalculation,
+      finalCalculation: finalCalculation,
+      finalcalchigherdividedValue50ft: finalcalchigherdividedValue50ft,
+      finalcalcinterpolated50ft: finalcalcinterpolated50ft,
+      finalcalcinterpolatedGR: finalcalcinterpolatedGR,
+      finalcalcHigherdividedValue: finalcalcHigherdividedValue,
+      calcPressureAltitudes: calcPressureAltitude,
+      calcdividedValue50ft: calcdividedValue50ft,
+      calcdividedValue: calcdividedValue,
       pressureAltitude: pressureAltitude,
       takeoffDistanceWithoutSafetyFactor: lastCalcTakeOff,
       takeoffDistanceWithIncreasedRotationSpeed: lastCalcTakeOff + 50,
@@ -247,9 +381,23 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
       landingDistanceWithIncreasedRotationSpeed:lastLanding + 55,
       correctedLandingDistance: (lastLanding + 55) * 1.43,
     }));
-    if (onResult) {
+    if (onResult) { 
       onResult({
-        
+        LandingcalcdividedValue50ft: landingcalcdividedValue50ft,
+        LandingcalcdividedValue: landingcalcdividedValue,
+        LandingfinalcalcHigherdividedValue: LandingfinalcalcHigherdividedValue,
+        LandingfinalcalcinterpolatedGR: LandingfinalcalcinterpolatedGR,
+        LandingfinalcalchigherdividedValue50ft: LandingfinalcalchigherdividedValue50ft,
+        Landingfinalcalcinterpolated50ft: Landingfinalcalcinterpolated50ft,
+        LandingfinalCalculation: LandingfinalCalculation,
+        finalCalculation: finalCalculation,
+        finalcalchigherdividedValue50ft: finalcalchigherdividedValue50ft,
+        finalcalcinterpolated50ft: finalcalcinterpolated50ft,
+        finalcalcHigherdividedValue: finalcalcHigherdividedValue,
+        finalcalcinterpolatedGR: finalcalcinterpolatedGR,
+        calcPressureAltitudes: calcPressureAltitude,
+        calcdividedValue50ft: calcdividedValue50ft,
+        calcdividedValue: calcdividedValue,
         takeoffDistanceWithoutSafetyFactor: lastCalcTakeOff,
         takeoffDistanceWithIncreasedRotationSpeed: lastCalcTakeOff + 50,
         correctedTakeoffDistance: (lastCalcTakeOff + 50) * 1.25,
