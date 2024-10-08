@@ -194,7 +194,7 @@ const TakeoffAndLandingCalculator = ({onResult}) => {
       );
     }
             // used for calculation output for PDF
-    const calcPressureAltitude = `(1013 - ${QNH}) * 30 + ${fieldElevation}`;
+    const calcPressureAltitude = `(1013 - ${QNH}) * 30 + ${fieldElevation} = ${pressureAltitude}`;
     const calcLowerValue = groundRollTable[`${lowerAltitude}`][lowerTemp]
     const calcHigherValue = groundRollTable[`${lowerAltitude}`][upperTemp]
     const calcCombinedValue = `${calcHigherValue} - ${calcLowerValue}`;
