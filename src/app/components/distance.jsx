@@ -22,8 +22,10 @@ const instructorData = [
   { name: "Stefàn", weight: 72 },
   { name: "TOR", weight: 76 },
   { name: "Johanna", weight: 72 },
-  { name: "Aimal", weight: 80 },
   { name: "Emil", weight: 80 },
+  { name: "Dan", weight: 88 },
+
+
 ];
 
 const WeightAndBalanceCalculator = ({ onResult }) => {
