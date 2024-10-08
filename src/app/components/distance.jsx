@@ -35,6 +35,7 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
   const [instructor, setInstructor] = useState(instructorData[0]);
   const [copilot, setCopilot] = useState('');
   const [baggage, setBaggage] = useState('');
+  const [fuelType, setFuelType] = useState(0.754);
 
   const handleAircraftChange = (e) => {
     const aircraft = aircraftData.find(a => a.reg === e.target.value);
@@ -48,7 +49,7 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
 
   const calculateTotal = () => {
     // Ensure all input values are converted to numbers
-    const totalFuel = Number((fuelLiters) * 0.72); // Convert liters to kg
+    const totalFuel = Number((fuelLiters) * fuelType); // Convert liters to kg
     const totalPilot = Number(pilot) || 0;
     const totalCopilot = instructor.weight > 0 ? instructor.weight : Number(copilot) || 0;
     const totalBaggage = Number(baggage) || 0;
@@ -160,7 +161,21 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
           </select>
         </div>
       </div>
-
+      <div className={styles.inputGroup}>
+        <label>Fuel Type:</label>
+        <button 
+          className={fuelType === 0.754 ? styles.selectedButton : styles.button} 
+          onClick={() => setFuelType(0.754)}
+        >
+          Mogas (0.754 kg/L)
+        </button>
+        <button 
+          className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
+          onClick={() => setFuelType(0.72)}
+        >
+          Avgas (0.72 kg/L)
+        </button>
+      </div>
       {/* Slider for Fuel Input */}
       <div className={styles.inputGroup}>
         <label htmlFor="fuel">Fuel (liters):</label>
