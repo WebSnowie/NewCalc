@@ -19,6 +19,7 @@
   border-radius: 5px; /* Slightly rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  margin-left: 3rem;
 }
 
 .saveButton:hover {

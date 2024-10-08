@@ -5,6 +5,74 @@ import TakeoffCalculator from './components/weightupdated'; // Takeoff Calculato
 import WeightAndBalanceCalculator from './components/distance'; // Weight and Balance Calculator component
 import styles from './page.module.css'; // CSS for styling
 
+const SaveCalculationButton = ({ takeoffResult }) => {
+  const handleDownloadCalc = async (event) => {
+    event.preventDefault(); // Prevents any default button behavior
+
+    const pdfUrl = `/calcform.pdf?t=${new Date().getTime()}`; // Path to the PDF
+    try {
+      const response = await fetch(pdfUrl);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+      }
+
+      const existingPdfBytes = await response.arrayBuffer();
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+      const form = pdfDoc.getForm();
+
+      if (takeoffResult) {
+        const {
+          LandingcalcdividedValue50ft,
+          LandingcalcdividedValue,
+          LandingfinalcalcHigherdividedValue,
+          LandingfinalcalcinterpolatedGR,
+          LandingfinalcalchigherdividedValue50ft,
+          LandingfinalCalculation,
+          finalCalculation,
+          finalcalchigherdividedValue50ft,
+          finalcalcHigherdividedValue,
+          finalcalcinterpolatedGR,
+          calcPressureAltitudes,
+          calcdividedValue50ft,
+          calcdividedValue
+        } = takeoffResult;
+        form.getTextField('QNH_calculation').setText(calcPressureAltitudes);
+        form.getTextField('groundroll').setText(calcdividedValue);
+        form.getTextField('50ftabove').setText(finalcalchigherdividedValue50ft); 
+    
+        form.getTextField('test').setText(calcdividedValue50ft); 
+        form.getTextField('testt').setText(finalcalcHigherdividedValue); 
+        form.getTextField('testtt').setText(finalcalcinterpolatedGR); 
+        form.getTextField('testttt').setText(finalCalculation);        
+        
+        form.getTextField('landinggroundroll').setText(LandingcalcdividedValue);
+        form.getTextField('landing50ftabove').setText(LandingfinalcalchigherdividedValue50ft); 
+        form.getTextField('landing1').setText(LandingcalcdividedValue50ft); 
+        form.getTextField('landing2').setText(LandingfinalcalcHigherdividedValue); 
+        form.getTextField('landing3').setText(LandingfinalcalcinterpolatedGR); 
+        form.getTextField('landing4').setText(LandingfinalCalculation);    
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Pre-Flight Calculations.pdf';
+        link.click();
+    }
+  else {
+    alert("Results are not available. Please perform calculations first.");
+  }
+} catch (error) {
+  console.error("Error loading PDF:", error);
+  alert(`Failed to load PDF document: ${error.message}. Please check the file path and try again.`);
+}
+};
+return (<button className={styles.saveButton} onClick={handleDownloadCalc}>
+  Save Calculations
+  </button>)
+
+
+    }
 // PDF Download Button Component
 const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
   const handleDownloadPDF = async (event) => {
@@ -48,19 +116,6 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
         const totalB = aircraftMoment + fuel_moment + pilot_moment + baggage_moment;
 
         const {
-          LandingcalcdividedValue50ft,
-          LandingcalcdividedValue,
-          LandingfinalcalcHigherdividedValue,
-          LandingfinalcalcinterpolatedGR,
-          LandingfinalcalchigherdividedValue50ft,
-          LandingfinalCalculation,
-          finalCalculation,
-          finalcalchigherdividedValue50ft,
-          finalcalcHigherdividedValue,
-          finalcalcinterpolatedGR,
-          calcPressureAltitudes,
-          calcdividedValue50ft,
-          calcdividedValue,
           takeoffDistanceWithoutSafetyFactor,
           takeoffDistanceWithIncreasedRotationSpeed,
           correctedTakeoffDistance,
@@ -92,23 +147,7 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
         // Landing Data
         form.getTextField('landingDistance').setText(formatValue(landingDistanceWithoutSafetyFactor));
         form.getTextField('CorrectedLanding').setText(formatValue(landingDistanceWithIncreasedRotationSpeed));
-        form.getTextField('CorrectedLandingSafety').setText(formatValue(correctedLandingDistance));
-
-        form.getTextField('QNH_calculation').setText(calcPressureAltitudes);
-        form.getTextField('groundroll').setText(calcdividedValue);
-        form.getTextField('50ftabove').setText(finalcalchigherdividedValue50ft); 
-
-        form.getTextField('test').setText(calcdividedValue50ft); 
-        form.getTextField('testt').setText(finalcalcHigherdividedValue); 
-        form.getTextField('testtt').setText(finalcalcinterpolatedGR); 
-        form.getTextField('testttt').setText(finalCalculation);        
-        
-        form.getTextField('landinggroundroll').setText(LandingcalcdividedValue);
-        form.getTextField('landing50ftabove').setText(LandingfinalcalchigherdividedValue50ft); 
-        form.getTextField('landing1').setText(LandingcalcdividedValue50ft); 
-        form.getTextField('landing2').setText(LandingfinalcalcHigherdividedValue); 
-        form.getTextField('landing3').setText(LandingfinalcalcinterpolatedGR); 
-        form.getTextField('landing4').setText(LandingfinalCalculation);        
+        form.getTextField('CorrectedLandingSafety').setText(formatValue(correctedLandingDistance));    
 
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
@@ -126,7 +165,7 @@ const SavePDFButton = ({ takeoffResult, weightBalanceResult }) => {
   };
 
   return (
-    <button className={styles.saveButton} onClick={handleDownloadPDF}>
+    <button className={styles.saveButton} onClick={handleDownloadPDF}> 
       Save PDF
     </button>
   );
@@ -151,6 +190,8 @@ const MainCalculator = () => {
       {takeoffResult && weightBalanceResult && (
         <div className={styles.buttonContainer}>
           <SavePDFButton takeoffResult={takeoffResult} weightBalanceResult={weightBalanceResult} />
+          <SaveCalculationButton takeoffResult={takeoffResult} />
+
         </div>
       )}
     </div>
