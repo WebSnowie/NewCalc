@@ -24,8 +24,7 @@ const instructorData = [
   { name: "Johanna", weight: 72 },
   { name: "Emil", weight: 80 },
   { name: "Dan", weight: 88 },
-
-
+  { name: "Jonas", weight: 75 },
 ];
 
 const WeightAndBalanceCalculator = ({ onResult }) => {
@@ -35,7 +34,7 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
   const [instructor, setInstructor] = useState(instructorData[0]);
   const [copilot, setCopilot] = useState('');
   const [baggage, setBaggage] = useState('');
-  const [fuelType, setFuelType] = useState(0.754);
+  const [fuelType, setFuelType] = useState(0.72);
 
   const handleAircraftChange = (e) => {
     const aircraft = aircraftData.find(a => a.reg === e.target.value);
