@@ -160,6 +160,12 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
           </select>
         </div>
       </div>
+      <button 
+          className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
+          onClick={() => setFuelType(0.72)}
+        >
+          Avgas (0.72 kg/L)
+        </button>
       <div className={styles.inputGroup}>
         <label>Fuel Type:</label>
         <button 
@@ -167,12 +173,6 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
           onClick={() => setFuelType(0.754)}
         >
           Mogas (0.754 kg/L)
-        </button>
-        <button 
-          className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
-          onClick={() => setFuelType(0.72)}
-        >
-          Avgas (0.72 kg/L)
         </button>
       </div>
       {/* Slider for Fuel Input */}
