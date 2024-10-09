@@ -161,13 +161,13 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
         </div>
       </div>
       <div className={styles.inputGroup}>
+      <label>Fuel Type:</label>
       <button 
           className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
           onClick={() => setFuelType(0.72)}
         >
           Avgas (0.72 kg/L)
         </button>
-        <label>Fuel Type:</label>
         <button 
           className={fuelType === 0.754 ? styles.selectedButton : styles.button} 
           onClick={() => setFuelType(0.754)}
