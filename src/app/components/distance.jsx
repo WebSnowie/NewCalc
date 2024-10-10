@@ -11,9 +11,6 @@ const aircraftData = [
   { reg: "OY-MJE", weight: 398, balanceArm: 1.671, moment: 665.058 },
   { reg: "OY-GBI", weight: 404.5, balanceArm: 1.688, moment: 682.796 },
   { reg: "OY-EMJ", weight: 398.245, balanceArm: 1.687, moment: 671.83932 },
-
-
-
 ];
 
 // Instructor data
@@ -34,7 +31,7 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
   const [instructor, setInstructor] = useState(instructorData[0]);
   const [copilot, setCopilot] = useState('');
   const [baggage, setBaggage] = useState('');
-  const [fuelType, setFuelType] = useState(0.72);
+  const [fuelType, setFuelType] = useState(0.745);
 
   const handleAircraftChange = (e) => {
     const aircraft = aircraftData.find(a => a.reg === e.target.value);
@@ -163,16 +160,16 @@ const WeightAndBalanceCalculator = ({ onResult }) => {
       <div className={styles.inputGroup}>
       <label>Fuel Type:</label>
       <button 
-          className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
-          onClick={() => setFuelType(0.72)}
-        >
-          Avgas (0.72 kg/L)
-        </button>
-        <button 
           className={fuelType === 0.754 ? styles.selectedButton : styles.button} 
           onClick={() => setFuelType(0.754)}
         >
           Mogas (0.754 kg/L)
+        </button>
+        <button 
+          className={fuelType === 0.72 ? styles.selectedButton : styles.button} 
+          onClick={() => setFuelType(0.72)}
+        >
+          Avgas (0.72 kg/L)
         </button>
       </div>
       {/* Slider for Fuel Input */}
